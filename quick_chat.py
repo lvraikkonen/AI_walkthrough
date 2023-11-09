@@ -19,11 +19,11 @@ chat = ChatOpenAI(model="gpt-4-vision-preview", max_tokens=256)
 response = chat.invoke([
     HumanMessage(
             content=[
-                {"type": "text", "text": "What is this image showing"},
+                {"type": "text", "text": "下面这张图片是什么内容?"},
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": "https://raw.githubusercontent.com/langchain-ai/langchain/master/docs/static/img/langchain_stack.png",
+                        "url": "https://upload.wikimedia.org/wikipedia/zh/f/f8/Super_Mario_Bros_Wonder_Boxart.png",
                         "detail": "auto",
                     },
                 },

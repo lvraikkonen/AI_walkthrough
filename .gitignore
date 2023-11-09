@@ -160,3 +160,9 @@ cython_debug/
 #.idea/
 
 .env
+*.db
+*.mp3
+*.mp4
+*.jpg
+*.jpeg
+*.png
