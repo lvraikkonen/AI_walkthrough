@@ -1,6 +1,6 @@
 import streamlit as st
 from PIL import Image
-import requests
+from openai import OpenAI
 import base64
 import io
 import os
@@ -13,6 +13,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=api_key)
+
+if api_key is None:
+    raise ValueError("Please set the OPENAI_API_KEY environment variable.")
 
 
 # Function to convert UTC to local time
@@ -39,14 +44,13 @@ def ask_openai(base64_image, question):
     """
     Function to make API call to OpenAI
     """
-    openai_api_key = api_key
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {openai_api_key}"
-    }
-    payload = {
-        "model": "gpt-4-vision-preview",
-        "messages": [
+    completion = client.chat.completions.create(
+        model="gpt-4-vision-preview",
+        messages= [
+            {
+                "role": "system",
+                "content": "你是一个得力的AI助手，帮助我识别图片中的内容，并以json格式显示"
+            },
             {
                 "role": "user",
                 "content": [
@@ -55,9 +59,10 @@ def ask_openai(base64_image, question):
                 ]
             }
         ],
-        "max_tokens": 300
-    }
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+        max_tokens=300,
+        # response_format={"type": "json_object"}    
+    )
+    response = completion.choices[0].message.content
     return response.json()
 
 # Initialize SQLite DB

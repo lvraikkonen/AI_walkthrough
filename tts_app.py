@@ -2,13 +2,15 @@ import streamlit as st
 import sqlite3
 from datetime import datetime
 import os
-import requests
+from openai import OpenAI
 
 # Retrieve API key from environment variable
 from dotenv import load_dotenv
 load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=openai_api_key)
 
 if openai_api_key is None:
     raise ValueError("Please set the OPENAI_API_KEY environment variable.")
@@ -25,33 +27,23 @@ def save_log(prompt, file_path, timestamp):
 
 # Function to generate and save audio
 def generate_and_save_audio(text, voice, model):
-    headers = {
-        'Authorization': f'Bearer {openai_api_key}',
-        'Content-Type': 'application/json',
-    }
-    
-    data = {
-        "model": model,
-        "input": text,
-        "voice": voice
-    }
+    response = client.audio.speech.create(
+        model=model,
+        input=input,
+        voice=voice,
+        response_format="mp3",
+        speed=1.0,
+    )
 
-    # POST request to OpenAI's API
-    response = requests.post('https://api.openai.com/v1/audio/speech', headers=headers, json=data)
-    
-    if response.status_code != 200:
-        raise Exception(f"Request failed with status code {response.status_code}: {response.text}")
-    
     # Generate the audio file path
     file_path = f"generated/audio/{voice}_{datetime.now().strftime('%Y%m%d%H%M%S')}.mp3"
-    
+
+    # generated to dir
+    response.stream_to_file(file_path)
+
     # Ensure the 'audio' directory exists
     os.makedirs('generated/audio', exist_ok=True)
     
-    # Save the binary content to the file
-    with open(file_path, 'wb') as f:
-        f.write(response.content)  # Note it's 'content' not 'data' when dealing with requests library
-
     # Log the prompt and file details in the SQLite DB
     save_log(text, file_path, datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
     

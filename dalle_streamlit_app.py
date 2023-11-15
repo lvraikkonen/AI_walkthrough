@@ -1,5 +1,5 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import os
 from PIL import Image
 import sqlite3
@@ -12,6 +12,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
+
+# # 设置网络代理 全局代理测试通过
+# os.environ["http_proxy"] = "http://127.0.0.1:7890"
+# os.environ["https_proxy"] = "http://127.0.0.1:7890"
+
 
 # Define your local timezone
 local_tz = pytz.timezone('Asia/Shanghai')  # For Sri Lanka
@@ -51,14 +56,11 @@ def get_all_images():
         cur.execute('SELECT id, prompt, revised_prompt, image_binary, image_url, timestamp FROM images ORDER BY timestamp DESC')
         return cur.fetchall()
 
-# Set your OpenAI API key
-openai.api_key = api_key
-
 # Initialize database
 init_db()
 
 # Initialize OpenAI Client
-# client = openai.
+client = OpenAI(api_key=api_key)
 
 st.title('DALL-E 3 Image Generator')
 
@@ -75,8 +77,7 @@ if page == "Generate":
     if st.button('Generate Image'):
         if prompt:
             try:
-                response = openai.Image.create(
-                # response = client.images.generate(
+                response = client.images.generate(
                     model="dall-e-3",
                     prompt=prompt,
                     size=size,
