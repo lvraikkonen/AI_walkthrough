@@ -29,3 +29,11 @@ something about LangChain
 - [ ] Chains
 - [ ] Callbacks/Tracing
 - [ ] Async
+
+### AutoGen
+
+AutoGen is a framework that enables development of LLM applications using multiple agents that can converse with each other to solve tasks.
+
+#### Use Cases
+
+- Group Chat
