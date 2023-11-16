@@ -168,3 +168,4 @@ cython_debug/
 *.png
 
 data/*
+OAI_CONFIG_LIST
