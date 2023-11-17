@@ -1,9 +1,8 @@
 import streamlit as st
 from openai import OpenAI
-import os
+import os, io
 from PIL import Image
 import base64
-import io, uuid
 from utils.db_utils import init_db, save_tts_log
 from utils.db_utils import insert_image, insert_vision_record, get_all_images, get_vision_records
 from utils.db_utils import get_tts_records
@@ -16,12 +15,19 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.getenv("OPENAI_API_KEY")
+HELICONE_API_KEY = os.getenv("HELICONE_API_KEY")
 
 # Initialize database
 init_db()
 
 # Initialize OpenAI Client
-client = OpenAI(api_key=api_key)
+client = OpenAI(
+    api_key=api_key,
+    base_url="http://oai.hconeai.com/v1",  # Set the API endpoint
+    default_headers= {
+        "Helicone-Auth": f"Bearer {HELICONE_API_KEY}"
+    }
+)
 
 
 # Define your local timezone
@@ -40,18 +46,11 @@ def generate_and_save_audio(text, voice, model):
             voice=voice,
             input=text,
             response_format="mp3",
-            speed=1.0
+            speed=1.0,
         )
 
     except Exception as error:
         print(str(error))
-    # response = client.audio.speech.create(
-    #     model=model,
-    #     input=input,
-    #     voice=voice,
-    #     response_format="mp3",
-    #     speed=1.0,
-    # )
 
     # Generate the audio file path
     file_path = f"generated/audio/{voice}_{datetime.now().strftime('%Y%m%d%H%M%S')}.mp3"
