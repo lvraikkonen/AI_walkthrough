@@ -169,3 +169,5 @@ cython_debug/
 
 data/*
 OAI_CONFIG_LIST
+
+.DS_Store
