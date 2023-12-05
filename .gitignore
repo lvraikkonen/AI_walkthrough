@@ -161,6 +161,7 @@ cython_debug/
 
 .env
 *.db
+*.sqlite
 *.mp3
 *.mp4
 *.jpg
@@ -171,3 +172,4 @@ data/*
 OAI_CONFIG_LIST
 
 .DS_Store
+.streamlit/

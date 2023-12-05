@@ -54,3 +54,29 @@ AutoGen is a framework that enables development of LLM applications using multip
 ### Low-code design AI flow
 
 [Flowise](https://flowiseai.com/)
+
+
+
+### RAG
+
+
+
+Evaluation RAG system mertics:
+
+![img](https://blog.langchain.dev/content/images/2023/08/image-21.png)
+
+- faithfulness
+- answer_relevancy
+- context_relevancy
+- context_recall
+
+
+
+#### How to improve RAG
+
+- [ ] Data quality, data cleaning
+- [ ] Text segmentation, try different segmentation strategies
+- [ ] Try different vector storage methods: Faiss, Chroma, Pinecone. Experiment with different embedding methods (e.g., BGE)
+- [ ] Experiment with different retrievers
+- [ ] Use hybrid search methods, such as BM25+Faiss
+- [ ] RAG-Fusion: Generate multiple user queries and rank the results, utilizing Reciprocal Rank Fusion (RRF) and custom vector score weighting to achieve comprehensive and accurate results.
