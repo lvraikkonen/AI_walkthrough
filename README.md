@@ -1,10 +1,10 @@
 # AI_walkthrough
 
-My hands-on to experience AI features like OpenAI and other related Tools
+hands-on experience of AI features like OpenAI and LLM-based application framework.
 
 
 
-### OpenAI 
+## OpenAI 
 
 - [x] GPT-4V
 - [x] Dall.E-3
@@ -19,7 +19,9 @@ My hands-on to experience AI features like OpenAI and other related Tools
 
 Action config, using OpenAPI schema
 
-### LangChain
+## Framework
+
+### LangChain General-purpose LLM framework
 
 something about LangChain
 
@@ -36,6 +38,10 @@ something about LangChain
 - [ ] Callbacks/Tracing
 - [ ] Async
 - [ ] Integration open-source models
+
+### Llama-Index
+
+Focus on ingesting, structuring, and accessing private or domain-specific data. Say RAG.
 
 ### AutoGen
 
@@ -56,19 +62,14 @@ AutoGen is a framework that enables development of LLM applications using multip
 [Flowise](https://flowiseai.com/)
 
 
+## Landing AI Tech
 
 ### RAG
 
+#### Evaluation System
 
-
-Evaluation RAG system mertics:
-
-![img](https://blog.langchain.dev/content/images/2023/08/image-21.png)
-
-- faithfulness
-- answer_relevancy
-- context_relevancy
-- context_recall
+1. TruLens [Trulens_Eval - Evaluation of LLMs and LLM-based applications with TruLens-Eval](https://www.trulens.org/trulens_eval/quickstart/)
+2. Ragas [Ragas - Evaluate framework for RAG system](https://docs.ragas.io/en/latest/)
 
 
 
